@@ -1,6 +1,7 @@
 \documentclass[a4paper,14pt]{uspd}
 \usepackage{fontenc}
 
+\defaultfontfeatures{Mapping=tex-text, Scale=MatchLowercase} % to support long dashes
 \newfontfamily{\cyrillicfont}{Times New Roman}
 \setmainfont{Times New Roman}
 \setromanfont{Times New Roman}
@@ -11,15 +12,38 @@
 
 \newcommand{\No}{\textnumero{}}
 
-\uspddesignation{04832915.10016--01~32~01}
+\uspdset[
+  designation = 04832915.10016--01~32~01,
+  agreeingsT = {
+    \signeefield{Зам. научного руководителя Программы «СКИФ» от РБ
+      Зам. генерального директора по научной работе ОИПИ НАН Беларуси}{Анищенко В. В.}
+  },
+  agreeingsB = {
+    \signeefield{Исполнительный директор Программы «СКИФ» от РФ\newline
+      директор ИПС РАН}{Абрамов С. М.}
+  },
+  approversT = {
+    \signeefield{Научный руководитель Программы «СКИФ» от РФ\newline
+      \newline% extra newline to fill space
+      Директор ИПС РАН}{Абрамов С. М.}
+  },
+  approversB = {
+    Представители предприятия--разработчика ИПС РАН \newline
+
+    Ответственный исполнитель \newline
+
+    \signeefield{Главный конструктор ПО КУ,\newline ст. научный сотрудник}{Роганов В. А.}
+
+    \signeefield{Нормоконтролер\newline ОИПИ НАН Беларуси}{Чернушевич В. Н.}
+  },
+  abstract = {Целью данного документа является ознакомление
+    системного программиста с архитектурой программной среды Т--системы.}
+]
 
 \title{ПРОГРАММНЫЕ СРЕДСТВА ДИНАМИЧЕСКОГО
 РАСПАРАЛЛЕЛИВАНИЯ ПРОГРАММ: Т--СИСТЕМА \\
 ~\\
 Руководство системного программиста}
-
-\uspdabstract{Целью данного документа является ознакомление
-системного программиста с архитектурой программной среды Т--системы.}
 
 \begin{document}
 

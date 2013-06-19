@@ -1,8 +1,8 @@
 %% Copyright (c) Kirill V. Zaborsky, 2013
 %%               Alexander V. Inyukhin, 2004.
-%% 
-%% This system is distributed in the hope that it will be useful, 
-%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%
+%% This system is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
 %% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{uspd}
@@ -30,17 +30,9 @@
 \RequirePackage{polyglossia}
 \setdefaultlanguage{russian}
 \RequirePackage[top=25mm,right=10mm,bottom=15mm,left=20mm]{geometry}
+\RequirePackage{pgfkeys}
 
 \setlength{\unitlength}{1mm}
-
-%\def\ps@uspdliheadings{
-%  \let\@oddfoot\@empty\let\@evenfoot\@empty
-%  \def\@oddhead{\\{\rightmark}\\}
-%  \def\@evenhead{\\{\leftmark}\\}
-%  \let\@mkboth\@gobbletwo
-%  \let\sectionmark\@gobble
-%  \let\subsectionmark\@gobble
-%}
 
 \def\ps@uspdluheadings{
   \def\@oddfoot{\\{Литера <<О>>}} % ГОСТ 2.103-68
@@ -87,6 +79,7 @@
 
 \newcommand\signfield[1]{\underline{\phantom{ЖЖЖЖЖ}}~{#1}}
 \newcommand\datefield{<<\underline{\phantom{Ж}}>>~\underline{\phantom{ЖЖЖЖЖ}}~{\number\year}~г.}
+\newcommand\signeefield[3]{#1\newline\signfield{#2}\newline\datefield\newline\newline}
 \newcommand\pagesfield[1]{\ifthenelse{\pageref{#1} > 1}{Листов \pageref{#1}}{}}
 
 \newcommand\LU[1]{\markboth{{#1}--ЛУ}{{#1}--ЛУ}\setcounter{page}{1}
@@ -103,16 +96,7 @@
 \begin{tabular}{p{70mm}cp{70mm}}
 \multicolumn{1}{c}{СОГЛАСОВАНО} & & \multicolumn{1}{c}{УТВЕРЖДАЮ} \\
 & & \\
-Зам. научного руководителя
-Программы <<СКИФ>> от РБ
-Зам. генерального директора
-по научной работе ОИПИ НАН Беларуси
-& &
-Научный руководитель
-Программы <<СКИФ>> от РФ
-Директор ИПС РАН \\
-\signfield{Анищенко~В.~В.} & & \signfield{Абрамов~С.~М.} \\
-\datefield & & \datefield \\
+\agreeingsT{} & & \approversT{} \\
 \end{tabular}
 
 \vskip 20mm
@@ -140,25 +124,9 @@
 
 \vskip 10mm
 
-% field 6, 
+% field 6,
 \begin{tabular}{p{70mm}cp{70mm}}
-СОГЛАСОВАНО & & Пред\-ста\-ви\-те\-ли пред\-при\-я\-тия--раз\-ра\-бот\-чи\-ка ИПС РАН \\
-& & \\
-Исполнительный директор Программы <<СКИФ>> от РФ & & Ответственный исполнитель \\
-директор ИПС РАН & &
-Главный конструктор ПО КУ, ст.~научный сотрудник НИИ механики МГУ \\
-\signfield{Абрамов~С.~М.} & & \signfield{Роганов~В.~А.} \\
-\datefield & & \datefield \\
-& & \\
-%& & Исполнитель \\
-%& & ведущий специалист МГУ \\
-%& & \signfield{Слепухин~А.~Ф.} \\
-%& & \datefield \\
-%& & \\
-& & Нормоконтролер \\
-& & ОИПИ НАН Беларуси \\
-& & \signfield{Чернушевич~В.~Н.} \\
-& & \datefield \\
+\agreeingsB{} & & \approversB{} \\
 \end{tabular}
 
 % field 7, year
@@ -209,7 +177,7 @@
 \pagesfield{enddoc}
 \end{center}
 
-% field 6, 
+% field 6,
 
 % field 7, year
 \vfill
@@ -256,21 +224,30 @@
 \newpage
 }}
 
-\let\@uspddesignation\relax
-\newcommand\uspddesignation[1]{\def\@uspddesignation{#1}}
 
-\let\@uspdabstract\relax
-\newcommand\uspdabstract[1]{\def\@uspdabstract{#1}}
+\pgfkeys{
+  /uspd/.cd,
+  designation/.store in =\designation,
+  abstract/.store in =\abstract,
+  agreeingsT/.store in = \agreeingsT,
+  agreeingsB/.store in = \agreeingsB,
+  approversT/.store in = \approversT,
+  approversB/.store in = \approversB,
+  agreeingsT,agreeingsB,
+  approversT,approversB
+}
 
-%\newenvironment{uspd}[1]{\sloppy\LU{#1}\TP{#1}\section*{Аннотация}\@uspdabstract\newpage\tableofcontents\newpage}{\uspd@LI}
-%\makeatother
+
+\newcommand{\uspdset}[1][]{
+  \pgfkeys{/uspd/.cd,#1}
+}
 
 \AtBeginDocument{
   \sloppy
-  \LU{\@uspddesignation}
-  \TP{\@uspddesignation}
+  \LU{\designation{}}
+  \TP{\designation{}}
   \pagestyle{uspdnormheadings}
-  \section*{Аннотация}\@uspdabstract\newpage
+  \section*{Аннотация}\abstract{}\newpage
   \tableofcontents\newpage
 }
 
