@@ -94,7 +94,13 @@
 
 % field 2, names and signatures
 \begin{tabular}{p{70mm}cp{70mm}}
-\multicolumn{1}{c}{СОГЛАСОВАНО} & & \multicolumn{1}{c}{УТВЕРЖДАЮ} \\
+\multicolumn{1}{c}{
+  \setbox0=\hbox{\agreeingsT{}\unskip}\ifdim\wd0=0pt
+    % empty
+  \else
+    СОГЛАСОВАНО%
+  \fi
+} & & \multicolumn{1}{c}{УТВЕРЖДАЮ} \\
 & & \\
 \agreeingsT{} & & \approversT{} \\
 \end{tabular}
